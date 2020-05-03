@@ -16,7 +16,8 @@ using namespace juce;
 //==============================================================================
 /**
 */
-class VellamoAudioProcessor : public juce::AudioProcessor
+class VellamoAudioProcessor : public AudioProcessor,
+	public ValueTree::Listener
 {
 public:
 	//==============================================================================
@@ -56,15 +57,27 @@ public:
 	void getStateInformation(juce::MemoryBlock& destData) override;
 	void setStateInformation(const void* data, int sizeInBytes) override;
 
-	AudioProcessorValueTreeState tree;
+	void VellamoAudioProcessor::updateADSR();
+
+	AudioProcessorValueTreeState& getValueTree() { return mAPVTS; }
+
+	AudioProcessorValueTreeState::ParameterLayout createParameters();
 
 private:
 	Synthesiser mSynth;
 	SynthVoice* mVoice;
 
-	const int mNumVoices{ 5 };
+	AudioProcessorValueTreeState mAPVTS;
+
+	ADSR::Parameters mADSRParams;
+
+	const int mNumVoices{ 6 };
 
 	double lastSampleRate;
+
+	void valueTreePropertyChanged(ValueTree& treeWhosePropertyHasChanged, const Identifier& property) override;
+
+	std::atomic<bool> mShouldUpdate{ false };
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VellamoAudioProcessor)
 };

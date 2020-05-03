@@ -20,14 +20,10 @@ VellamoAudioProcessor::VellamoAudioProcessor()
 		.withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
 		),
-	tree(*this, nullptr, "PARAMETERS",
-		{ std::make_unique<AudioParameterFloat>("attack", "Attack", NormalisableRange<float>(0.1f, 5.0f), 0.1f),
-			std::make_unique<AudioParameterFloat>("decay", "Decay", NormalisableRange<float>(0.1f, 2.0f), 0.8f),
-			std::make_unique<AudioParameterFloat>("sustain", "Sustain", NormalisableRange<float>(0.1f, 1.0f), 0.8f),
-			std::make_unique<AudioParameterFloat>("release", "Release", NormalisableRange<float>(0.1f, 5.0f), 0.1f),
-		})
+	mAPVTS(*this, nullptr, "PARAMETERS", createParameters())
 #endif
 {
+	mAPVTS.state.addListener(this);
 
 	mSynth.clearVoices();
 
@@ -150,17 +146,9 @@ void VellamoAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce:
 	auto totalNumInputChannels = getTotalNumInputChannels();
 	auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-
-	for (int i = 0; i < mSynth.getNumVoices(); i++)
+	if (mShouldUpdate)
 	{
-		if ((mVoice = dynamic_cast<SynthVoice*>(mSynth.getVoice(i))))
-		{
-			mVoice->setADSRSampleRate(lastSampleRate);
-			mVoice->getEnvelopeParams((float*)tree.getRawParameterValue("attack"),
-				(float*)tree.getRawParameterValue("decay"),
-				(float*)tree.getRawParameterValue("sustain"),
-				(float*)tree.getRawParameterValue("release"));
-		}
+		updateADSR();
 	}
 
 	buffer.clear();
@@ -191,6 +179,40 @@ void VellamoAudioProcessor::setStateInformation(const void* data, int sizeInByte
 {
 	// You should use this method to restore your parameters from this memory block,
 	// whose contents will have been created by the getStateInformation() call.
+}
+
+void VellamoAudioProcessor::updateADSR()
+{
+	mShouldUpdate = false;
+
+	for (int i = 0; i < mSynth.getNumVoices(); i++)
+	{
+		if ((mVoice = dynamic_cast<SynthVoice*>(mSynth.getVoice(i))))
+		{
+			mVoice->setADSRSampleRate(lastSampleRate);
+			mVoice->getEnvelopeParams((float*)mAPVTS.getRawParameterValue("ATTACK"),
+				(float*)mAPVTS.getRawParameterValue("DECAY"),
+				(float*)mAPVTS.getRawParameterValue("SUSTAIN"),
+				(float*)mAPVTS.getRawParameterValue("RELEASE"));
+		}
+	}
+}
+
+AudioProcessorValueTreeState::ParameterLayout VellamoAudioProcessor::createParameters()
+{
+	std::vector<std::unique_ptr<RangedAudioParameter>> params;
+
+	params.push_back(std::make_unique<AudioParameterFloat>("ATTACK", "Attack", 0.0f, 5.0f, 0.0f));
+	params.push_back(std::make_unique<AudioParameterFloat>("DECAY", "Decay", 0.0f, 5.0f, 2.0f));
+	params.push_back(std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 1.0f));
+	params.push_back(std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.0f, 5.0f, 0.0f));
+
+	return { params.begin(), params.end() };
+}
+
+void VellamoAudioProcessor::valueTreePropertyChanged(ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
+{
+
 }
 
 //==============================================================================

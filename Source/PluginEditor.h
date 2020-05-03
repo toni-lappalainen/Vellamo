@@ -35,5 +35,10 @@ private:
 	Label mAttackLabel, mDecayLabel, mSustainLabel, mReleaseLabel;
 	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> attackVal, decayVal, sustainVal, releaseVal;
 
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> mAttackAttachment;
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> mDecayAttachment;
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> mSustainAttachment;
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> mReleaseAttachment;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VellamoAudioProcessorEditor)
 };
