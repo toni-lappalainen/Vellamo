@@ -196,6 +196,7 @@ void VellamoAudioProcessor::updateADSR()
 				(float*)mAPVTS.getRawParameterValue("RELEASE"));
 		}
 	}
+	DBG(std::to_string(*mAPVTS.getRawParameterValue("RELEASE")));
 }
 
 AudioProcessorValueTreeState::ParameterLayout VellamoAudioProcessor::createParameters()
@@ -212,7 +213,7 @@ AudioProcessorValueTreeState::ParameterLayout VellamoAudioProcessor::createParam
 
 void VellamoAudioProcessor::valueTreePropertyChanged(ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
 {
-
+	mShouldUpdate = true;
 }
 
 //==============================================================================
