@@ -33,7 +33,6 @@ private:
 
 	Slider mAttackSlider, mDecaySlider, mSustainSlider, mReleaseSlider;
 	Label mAttackLabel, mDecayLabel, mSustainLabel, mReleaseLabel;
-	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> attackVal, decayVal, sustainVal, releaseVal;
 
 	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> mAttackAttachment;
 	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> mDecayAttachment;

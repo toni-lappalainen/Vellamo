@@ -5,6 +5,9 @@
               pluginFormats="buildStandalone,buildVST3">
   <MAINGROUP id="OjU6w4" name="Vellamo">
     <GROUP id="{E95398FB-31D6-3047-47EB-D23489D07ABE}" name="Source">
+      <FILE id="Y13fXJ" name="ADSRComponent.cpp" compile="1" resource="0"
+            file="Source/ADSRComponent.cpp"/>
+      <FILE id="cILY0D" name="ADSRComponent.h" compile="0" resource="0" file="Source/ADSRComponent.h"/>
       <FILE id="WywEP6" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
       <FILE id="WZJmgc" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
       <FILE id="NLczUP" name="maximilian.cpp" compile="1" resource="0" file="Source/maximilian.cpp"/>
