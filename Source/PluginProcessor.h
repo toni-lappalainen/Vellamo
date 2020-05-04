@@ -57,9 +57,9 @@ public:
 	void getStateInformation(juce::MemoryBlock& destData) override;
 	void setStateInformation(const void* data, int sizeInBytes) override;
 
-	void VellamoAudioProcessor::updateADSR();
+	void updateADSR();
 
-	ADSR::Parameters& getADSRParams() { return mADSRParams; }
+	//ADSR::Parameters& getADSRParams() { return mADSRParams; }
 
 	AudioProcessorValueTreeState& getValueTree() { return mAPVTS; }
 
@@ -68,9 +68,9 @@ private:
 	Synthesiser mSynth;
 	SynthVoice* mVoice;
 
+	//ADSR::Parameters mADSRParams;
 	AudioProcessorValueTreeState mAPVTS;
 
-	ADSR::Parameters mADSRParams;
 
 	const int mNumVoices{ 6 };
 

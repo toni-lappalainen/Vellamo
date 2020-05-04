@@ -78,6 +78,11 @@ public:
 		adsrParams.release = *release;
 	}
 
+	ADSR::Parameters getParams()
+	{
+		return adsrParams;
+	}
+
 	//=======================================================
 
 	void startNote(int midiNoteNumber, float velocity, SynthesiserSound* sound, int currentPitchWheelPosition) override
