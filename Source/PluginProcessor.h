@@ -59,8 +59,6 @@ public:
 
 	void updateADSR();
 
-	//ADSR::Parameters& getADSRParams() { return mADSRParams; }
-
 	AudioProcessorValueTreeState& getValueTree() { return mAPVTS; }
 
 
@@ -68,7 +66,6 @@ private:
 	Synthesiser mSynth;
 	SynthVoice* mVoice;
 
-	//ADSR::Parameters mADSRParams;
 	AudioProcessorValueTreeState mAPVTS;
 
 
