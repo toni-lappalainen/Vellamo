@@ -35,13 +35,13 @@
         <FILE id="Fb18H2" name="stb_vorbis.c" compile="1" resource="0" file="Source/libs/stb_vorbis.c"/>
         <FILE id="BNOCN5" name="stb_vorbis.h" compile="0" resource="0" file="Source/libs/stb_vorbis.h"/>
       </GROUP>
+      <FILE id="gtpoTm" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="ynHHPP" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
       <FILE id="zgNuGO" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="FMRxCt" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="gtpoTm" name="PluginEditor.cpp" compile="1" resource="0"
-            file="Source/PluginEditor.cpp"/>
-      <FILE id="ynHHPP" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

@@ -59,9 +59,10 @@ public:
 
 	void VellamoAudioProcessor::updateADSR();
 
+	ADSR::Parameters& getADSRParams() { return mADSRParams; }
+
 	AudioProcessorValueTreeState& getValueTree() { return mAPVTS; }
 
-	AudioProcessorValueTreeState::ParameterLayout createParameters();
 
 private:
 	Synthesiser mSynth;
@@ -74,6 +75,8 @@ private:
 	const int mNumVoices{ 6 };
 
 	double lastSampleRate;
+
+	AudioProcessorValueTreeState::ParameterLayout createParameters();
 
 	void valueTreePropertyChanged(ValueTree& treeWhosePropertyHasChanged, const Identifier& property) override;
 
