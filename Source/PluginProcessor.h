@@ -58,6 +58,7 @@ public:
 	void setStateInformation(const void* data, int sizeInBytes) override;
 
 	void updateADSR();
+	void updateOsc();
 
 	AudioProcessorValueTreeState& getValueTree() { return mAPVTS; }
 

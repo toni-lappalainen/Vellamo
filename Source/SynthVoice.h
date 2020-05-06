@@ -70,6 +70,48 @@ public:
 		mADSR.setSampleRate(sampleRate);
 	}
 
+	//=======================================================
+
+	void getOscOneType(String selection)
+	{
+		String square = "Square";
+		String saw = "Saw";
+
+		if (square == selection)
+		{
+			waveOne = 0;
+		}
+		if (saw == selection)
+			waveOne = 1;
+		else
+			waveOne = 2;
+
+	}
+
+	//=======================================================
+
+	double setOscType()
+	{
+		double sample1;
+
+		switch (waveOne)
+		{
+		case 0:
+			sample1 = osc1.square(frequency);
+			break;
+		case 1:
+			sample1 = osc1.saw(frequency);
+			break;
+		default:
+			sample1 = osc1.sinewave(frequency);
+			break;
+		}
+
+		return sample1;
+	}
+
+	//=======================================================
+
 	void getEnvelopeParams(float* attack, float* decay, float* sustain, float* release)
 	{
 		adsrParams.attack = *attack;
@@ -122,6 +164,13 @@ public:
 
 	//=======================================================
 
+	double setEnvelope()
+	{
+		//	double test = setOscType();
+		return mADSR.getNextSample() * setOscType();
+	}
+
+	//=======================================================
 
 	void renderNextBlock(AudioBuffer <float>& outputBuffer, int startSample, int numSamples) override
 	{
@@ -129,11 +178,10 @@ public:
 
 		for (int sample = 0; sample < numSamples; ++sample)
 		{
-			waveOne = osc1.sinewave(frequency);
 
 			for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
 			{
-				outputBuffer.addSample(channel, startSample, mADSR.getNextSample() * waveOne);
+				outputBuffer.addSample(channel, startSample, setEnvelope() * 0.3f);
 			}
 			++startSample;
 		}
@@ -144,7 +192,9 @@ private:
 	double level;
 	double frequency;
 
-	double waveOne;
+	int waveOne;
+
+	String test;
 
 	maxiOsc osc1;
 	maxiEnv env1;

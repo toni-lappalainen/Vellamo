@@ -149,6 +149,7 @@ void VellamoAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce:
 	if (mShouldUpdate)
 	{
 		updateADSR();
+		updateOsc();
 	}
 
 	buffer.clear();
@@ -196,17 +197,38 @@ void VellamoAudioProcessor::updateADSR()
 				(float*)mAPVTS.getRawParameterValue("RELEASE"));
 		}
 	}
-	DBG(std::to_string(*mAPVTS.getRawParameterValue("RELEASE")));
+}
+
+void VellamoAudioProcessor::updateOsc()
+{
+	mShouldUpdate = false;
+
+	//	String test = mAPVTS.getParameter("WAVETYPE")->getCurrentValueAsText();
+
+	for (int i = 0; i < mSynth.getNumVoices(); i++) {
+		if ((mVoice = dynamic_cast<SynthVoice*>(mSynth.getVoice(i))))
+		{
+			auto wave = dynamic_cast<AudioParameterChoice*>(mAPVTS.getParameter("WAVETYPE"))->getCurrentChoiceName();
+			mVoice->getOscOneType(wave);
+		}
+	}
+
+
 }
 
 AudioProcessorValueTreeState::ParameterLayout VellamoAudioProcessor::createParameters()
 {
 	std::vector<std::unique_ptr<RangedAudioParameter>> params;
 
+	const StringArray choices{ "Square", "Saw", "Sine" };
+
 	params.push_back(std::make_unique<AudioParameterFloat>("ATTACK", "Attack", 0.0f, 5.0f, 0.0f));
 	params.push_back(std::make_unique<AudioParameterFloat>("DECAY", "Decay", 0.0f, 5.0f, 2.0f));
 	params.push_back(std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 1.0f));
 	params.push_back(std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.0f, 5.0f, 0.0f));
+
+
+	params.push_back(std::make_unique<AudioParameterChoice>("WAVETYPE", "Wavetype", choices, 0, "Wave Form"));
 
 	return { params.begin(), params.end() };
 }

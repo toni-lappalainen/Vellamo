@@ -32,7 +32,10 @@ void VellamoAudioProcessorEditor::paint(juce::Graphics& g)
 
 void VellamoAudioProcessorEditor::resized()
 {
-	mOscOneGui.setBoundsRelative(0.0f, 0.25f, 1.0f, 0.5);
+
+	Rectangle<int> area = getLocalBounds();
+
+	mOscOneGui.setBounds(area.removeFromLeft(200).removeFromTop(200));
 	mADSR.setBoundsRelative(0.0f, 0.75f, 1.0f, 0.25f);
 }
 
