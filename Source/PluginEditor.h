@@ -13,6 +13,7 @@
 #include "MainGui.h"
 #include "ADSRComponent.h"
 #include "OscillatorOne.h"
+#include "Filter.h"
 
 //==============================================================================
 /**
@@ -33,8 +34,9 @@ private:
 	// access the processor object that created it.
 
 	MainGui mMainGui;
-	ADSRComponent mADSR;
 	OscillatorOne mOscOneGui;
+	ADSRComponent mADSR;
+	Filter mFilter;
 
 	VellamoAudioProcessor& processor;
 

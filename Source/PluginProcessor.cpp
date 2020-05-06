@@ -217,8 +217,6 @@ void VellamoAudioProcessor::updateOsc()
 {
 	mShouldUpdate = false;
 
-	//	String test = mAPVTS.getParameter("WAVETYPE")->getCurrentValueAsText();
-
 	for (int i = 0; i < mSynth.getNumVoices(); i++) {
 		if ((mVoice = dynamic_cast<SynthVoice*>(mSynth.getVoice(i))))
 		{
@@ -226,15 +224,29 @@ void VellamoAudioProcessor::updateOsc()
 			mVoice->getOscOneType(wave);
 		}
 	}
+}
 
+void VellamoAudioProcessor::updateFilter()
+{
+	mShouldUpdate = false;
 
+	for (int i = 0; i < mSynth.getNumVoices(); i++) {
+		if ((mVoice = dynamic_cast<SynthVoice*>(mSynth.getVoice(i))))
+		{
+			auto filter = dynamic_cast<AudioParameterChoice*>(mAPVTS.getParameter("FILTERTYPE"))->getCurrentChoiceName();
+			mVoice->getFilterType(filter);
+			mVoice->getFilterParams((float*)mAPVTS.getRawParameterValue("CUTOFF"),
+				(float*)mAPVTS.getRawParameterValue("RESONANCE"));
+		}
+	}
 }
 
 AudioProcessorValueTreeState::ParameterLayout VellamoAudioProcessor::createParameters()
 {
 	std::vector<std::unique_ptr<RangedAudioParameter>> params;
 
-	const StringArray choices{ "Square", "Saw", "Sine" };
+	const StringArray Wavetypes{ "Square", "Saw", "Sine" };
+	const StringArray Filtertypes{ "LP", "BP", "HP" };
 
 
 	params.push_back(std::make_unique<AudioParameterFloat>("MASTER", "Master", 0.0f, 0.9f, 0.3f));
@@ -244,7 +256,11 @@ AudioProcessorValueTreeState::ParameterLayout VellamoAudioProcessor::createParam
 	params.push_back(std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 1.0f));
 	params.push_back(std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.0f, 5.0f, 0.0f));
 
-	params.push_back(std::make_unique<AudioParameterChoice>("WAVETYPE", "Wavetype", choices, 0, "Wave Form"));
+	params.push_back(std::make_unique<AudioParameterChoice>("WAVETYPE", "Wavetype", Wavetypes, 0, "Wave Form"));
+
+	params.push_back(std::make_unique<AudioParameterChoice>("FILTERTYPE", "Filtertype", Filtertypes, 0, "Filter type"));
+	params.push_back(std::make_unique<AudioParameterFloat>("CUTOFF", "Cutoff", 0.0f, 1.0f, 0.9f));
+	params.push_back(std::make_unique<AudioParameterFloat>("RESONANCE", "Resonance", 0.0f, 1.0f, 0.1f));
 
 	return { params.begin(), params.end() };
 }

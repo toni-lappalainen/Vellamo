@@ -28,8 +28,6 @@ public:
 private:
 	ComboBox mOscMenu;
 
-	//ScopedPointer<AudioProcessorValueTreeState::ComboBoxAttachment> waveSelection;
-
 	std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> mWaveAttachment;
 	VellamoAudioProcessor& processor;
 

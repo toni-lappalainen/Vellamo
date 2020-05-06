@@ -87,7 +87,6 @@ public:
 			waveOne = 2;
 
 		//	DBG(waveOne);
-
 	}
 
 	//=======================================================
@@ -110,6 +109,29 @@ public:
 		}
 
 		return sample1;
+	}
+
+	//=======================================================
+
+	void getFilterParams(float* cutoff, float* resonance)
+	{
+		mCutoff = *cutoff;
+		mResonance = *resonance;
+	}
+
+	//=======================================================
+
+	void getFilterType(String selection)
+	{
+		String LP = "LP";
+		String BP = "BP";
+
+		if (LP == selection)
+			filterType = 0;
+		else if (BP == selection)
+			filterType = 1;
+		else
+			filterType = 2;
 	}
 
 	//=======================================================
@@ -200,6 +222,7 @@ private:
 	double frequency;
 
 	int waveOne;
+	int filterType;
 
 	String test;
 
@@ -214,8 +237,8 @@ private:
 	float pitchBendUpSemitones = 2.0f;
 	float pitchBendDownSemitones = 2.0f;
 
-	float cutoff;
-	float resonance;
+	float mCutoff;
+	float mResonance;
 
 	ADSR mADSR;
 	ADSR::Parameters adsrParams;
