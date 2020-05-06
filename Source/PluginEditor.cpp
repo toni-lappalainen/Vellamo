@@ -11,10 +11,11 @@
 
 //==============================================================================
 VellamoAudioProcessorEditor::VellamoAudioProcessorEditor(VellamoAudioProcessor& p)
-	: AudioProcessorEditor(&p), mADSR(p), mOscOneGui(p), processor(p)
+	: AudioProcessorEditor(&p), mMainGui(p), mADSR(p), mOscOneGui(p), processor(p)
 {
 	// Make sure that before the constructor has finished, you've set the
 	// editor's size to whatever you need it to be.
+	addAndMakeVisible(mMainGui);
 	addAndMakeVisible(mADSR);
 	addAndMakeVisible(mOscOneGui);
 	setSize(600, 400);
@@ -35,7 +36,11 @@ void VellamoAudioProcessorEditor::resized()
 
 	Rectangle<int> area = getLocalBounds();
 
-	mOscOneGui.setBounds(area.removeFromLeft(200).removeFromTop(200));
+	const int componentWidth = 200;
+	const int componentHeight = 200;
+
+	mMainGui.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
+	mOscOneGui.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
 	mADSR.setBoundsRelative(0.0f, 0.75f, 1.0f, 0.25f);
 }
 

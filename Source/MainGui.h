@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-	OscillatorOne.h
-	Created: 4 May 2020 10:04:29pm
+	MainGui.h
+	Created: 6 May 2020 6:32:57pm
 	Author:  tonil
 
   ==============================================================================
@@ -16,22 +16,23 @@
 //==============================================================================
 /*
 */
-class OscillatorOne : public juce::Component
+class MainGui : public juce::Component
 {
 public:
-	OscillatorOne(VellamoAudioProcessor&);
-	~OscillatorOne();
+	MainGui(VellamoAudioProcessor&);
+	~MainGui();
 
 	void paint(juce::Graphics&) override;
 	void resized() override;
 
 private:
-	ComboBox mOscMenu;
 
-	//ScopedPointer<AudioProcessorValueTreeState::ComboBoxAttachment> waveSelection;
+	Slider mMasterVolumeSlider;
+	Label mMasterVolumeLabel;
 
-	std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> mWaveAttachment;
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> mMasterVolumeAttachment;
+
 	VellamoAudioProcessor& processor;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OscillatorOne)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainGui)
 };

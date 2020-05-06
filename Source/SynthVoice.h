@@ -77,14 +77,16 @@ public:
 		String square = "Square";
 		String saw = "Saw";
 
+		//DBG(selection);
+
 		if (square == selection)
-		{
 			waveOne = 0;
-		}
-		if (saw == selection)
+		else if (saw == selection)
 			waveOne = 1;
 		else
 			waveOne = 2;
+
+		//	DBG(waveOne);
 
 	}
 
@@ -162,6 +164,11 @@ public:
 
 	}
 
+	void getMainVolumeParams(float* volume)
+	{
+		mMasterVolume = *volume;
+	}
+
 	//=======================================================
 
 	double setEnvelope()
@@ -181,7 +188,7 @@ public:
 
 			for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
 			{
-				outputBuffer.addSample(channel, startSample, setEnvelope() * 0.3f);
+				outputBuffer.addSample(channel, startSample, setEnvelope() * mMasterVolume);
 			}
 			++startSample;
 		}
@@ -200,7 +207,7 @@ private:
 	maxiEnv env1;
 	maxiFilter filter1;
 
-	float masterGain;
+	float mMasterVolume = 0.3f;
 
 	int noteNumber;
 	float pitchBend = 0.0f;

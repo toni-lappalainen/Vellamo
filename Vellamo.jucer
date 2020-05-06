@@ -5,6 +5,10 @@
               pluginFormats="buildStandalone,buildVST3">
   <MAINGROUP id="OjU6w4" name="Vellamo">
     <GROUP id="{E95398FB-31D6-3047-47EB-D23489D07ABE}" name="Source">
+      <FILE id="YqoP8Z" name="Filter.cpp" compile="1" resource="0" file="Source/Filter.cpp"/>
+      <FILE id="VIGGdf" name="Filter.h" compile="0" resource="0" file="Source/Filter.h"/>
+      <FILE id="CenCjn" name="MainGui.cpp" compile="1" resource="0" file="Source/MainGui.cpp"/>
+      <FILE id="M5khiN" name="MainGui.h" compile="0" resource="0" file="Source/MainGui.h"/>
       <FILE id="gDiGfW" name="OscillatorOne.cpp" compile="1" resource="0"
             file="Source/OscillatorOne.cpp"/>
       <FILE id="AeYkwF" name="OscillatorOne.h" compile="0" resource="0" file="Source/OscillatorOne.h"/>
